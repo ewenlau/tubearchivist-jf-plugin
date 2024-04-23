@@ -50,7 +50,7 @@ namespace Jellyfin.Plugin.TubeArchivistMetadata.Providers
         {
             var result = new MetadataResult<Series>();
             var taApi = TubeArchivistApi.GetInstance();
-            var channelTAId = info.Path.Split("/").Last();
+            var channelTAId = item.Path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries).Last().Split('.');
             var channel = await taApi.GetChannel(channelTAId).ConfigureAwait(true);
             _logger.LogInformation("{Message}", string.Format(CultureInfo.CurrentCulture, "Getting metadata for channel: {0} ({1})", channel?.Name, channelTAId));
             _logger.LogInformation("{Message}", "Received metadata: \n" + JsonConvert.SerializeObject(channel));
